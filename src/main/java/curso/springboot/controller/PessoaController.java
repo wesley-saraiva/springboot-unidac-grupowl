@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import curso.springboot.model.Pessoa;
 import curso.springboot.repository.PessoaRepository;
 
-@Controller
+@RestController
 public class PessoaController {
 
 	@Autowired
