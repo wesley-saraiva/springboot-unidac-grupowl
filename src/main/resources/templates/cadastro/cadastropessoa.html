@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro</title>
+
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+  <link rel="stylesheet" type="text/css" href="">
+</head>
+<body>
+
+<nav  class="red" style="padding:0px 10px;">
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Unidac Grupo WL</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/index">Home</a></li>
+        <li><a href="#cad">Cadastro</a></li>
+        <li><a href="/desafio-unidac-grupowl/listapessoas">Lista</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="container">
+
+<div class="row" id="cad" style="margin-top: 50px;">
+<h4>Cadastro Colaboradores</h4>
+
+<form action="salvarpessoa" method="post" th:object="${pessoaobj}">
+  <div class="col s6">
+  <label  style="font-weight: bold; color: black; font-size: 15px;">ID</label>
+  <input name="id" th:field="*{id}" readonly="readonly">
+  </div>
+  <div class="col s6">
+  <label  style="font-weight: bold; color: black; font-size: 15px;">Nome Colaborador</label>
+  <input name="nome" th:field="*{nome}" required="required" placeholder="Informe o nome">
+  </div>
+  <div class="col s6">
+  <label  style="font-weight: bold; color: black; font-size: 15px;">CPF</label>
+  <input type="text" name="cpf" th:field="*{cpf}" class="validate" oninput="mascara(this)" 
+  id="cpf" placeholder="000.000.000-00" required="required">
+  </div>
+  <div class="col s6">
+    <select multiple name="cafemanha" id="cafemanha" th:field="*{cafemanha}" 
+    style="margin-bottom: 80px;" required="required">
+      <option value="" disabled selected>Escolha seu Cafe da manha</option>
+      <option value="Suco de Uva">Suco de Uva</option>
+      <option value="Suco de Laranja">Suco de Laranja</option>
+      <option value="Suco de Maracuja">Suco de Maracuja</option>
+      <option value="Pao Torrado">Pao Torrado</option>
+      <option value="Pao Manteiga">Pao Manteiga</option>
+      <option value="Pao Mortadela">Pao Mortadela</option>
+      <option value="Cafe Sem Açucar">Cafe Sem Açucar</option>
+      <option value="Cafe Adocado">Cafe Adoçado</option>
+    </select>
+    
+	</div>
+	<div class="col s12">
+	<input class="waves-effect waves-light btn" type="submit" value="Salvar">
+	<input  class="waves-effect waves-light btn" type="reset" value="Limpar">
+	</div> 
+ </form>
+   
+ </div>
+<br/>
+<br/>
+
+<br/>
+<br/>
+
+<form action="pesquisarpessoa" method="post" id="buscar">
+<label style="font-weight: bold; color: black; font-size: 15px;">Pesquisa por nome:</label>
+<input name="nomepesquisa">
+<input  class="waves-effect waves-light btn" type="submit" value="Buscar">
+</form>
+
+<br/>
+<br/>
+ <table class="highlight" style="margin-bottom: 50px;" id="lista">
+  <tr>
+    <th>ID</th>
+    <th>Nome</th>
+    <th>Cafe Manha</th>
+    <th>Editar</th>
+    <th>Excluir</th>
+  </tr>
+  <tr th:each = "pessoa : ${pessoas}">
+   <td th:text = "${pessoa.id}"></td>
+   <td th:text = "${pessoa.nome}"></td>
+   <td th:text = "${pessoa.cafemanha}"></td>
+   <td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a> </td>
+   <td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a> </td>
+  </tr>
+ </table>
+ </div>
+ <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+ <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+ <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.js"></script><style type="text/css"></style>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">    
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    
+ 
+ <script type="text/javascript">
+ window.onload=function(){
+	 $(document).ready(function() {
+	     $('select').material_select();
+	 });
+	 }//]]>
+	
+	 function mascara(i) {
+
+			var cpf = i.value;
+
+			if (isNaN(cpf[cpf.length - 1])) { // impede entrar outro caractere que não seja número
+				i.value = v.substring(0, cpf.length - 1);
+				return;
+			}
+
+			i.setAttribute("maxlength", "14");
+			if (cpf.length == 3 || cpf.length == 7)
+				i.value += ".";
+			if (cpf.length == 11)
+				i.value += "-";
+
+		}
+
+ </script>
+ 
+</body>
+</html>
