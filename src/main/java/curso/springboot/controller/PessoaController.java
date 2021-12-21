@@ -16,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import curso.springboot.model.Pessoa;
 import curso.springboot.repository.PessoaRepository;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 38dee3aeb45093a6b2e887ef3d341a9d4c238699
 @RestController
 public class PessoaController {
 
